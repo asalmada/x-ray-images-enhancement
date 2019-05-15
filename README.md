@@ -7,7 +7,7 @@
 `apt-get install python3-venv`
 
 ## Libraries
-Beforehand, setup the repository by following the instructions from [installation](installation) section.  
+Setup the repository by following the instructions from [installation](installation) section.  
 After activating the environment, install these libraries.
 
 ### numpy
