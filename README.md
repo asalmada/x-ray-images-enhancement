@@ -1,3 +1,15 @@
+# X-Ray Images Enhancement
+
+## Abstract
+The objective of this project is to get a better visualization of spotted bones, tissues and other body structures in an x-ray image, using image enhancement techniques, helping medical applications and diagnosis.
+
+## Example Image
+
+![alt text](https://www.nsf.gov/news/mmg/media/images/pr05005xray1_f.jpg "Unprocessed image of a chest x-ray film")
+##### Courtesy: National Science Foundation
+
+Unprocessed images of x-ray films, like this one of a chest, made by *Nikola Zivaljevic, M.D.* and found at the [National Sciente Foundation Multimedia Gallery]([https://www.nsf.gov/news/mmg/mmg_disp.jsp?med_id=52110](https://www.nsf.gov/news/mmg/mmg_disp.jsp?med_id=52110)), will be used in this project.
+
 # Dependencies
 ## Packages
 ### Python
