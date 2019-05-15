@@ -8,7 +8,13 @@ The objective of this project is to get a better visualization of spotted bones,
 ![alt text](https://www.nsf.gov/news/mmg/media/images/pr05005xray1_f.jpg "Unprocessed image of a chest x-ray film")
 ##### Courtesy: National Science Foundation
 
-Unprocessed images of x-ray films, like this one of a chest, made by *Nikola Zivaljevic, M.D.* and found at the [National Sciente Foundation Multimedia Gallery]([https://www.nsf.gov/news/mmg/mmg_disp.jsp?med_id=52110](https://www.nsf.gov/news/mmg/mmg_disp.jsp?med_id=52110)), will be used in this project.
+Unprocessed images of x-ray films, like this one of a chest, made by *Nikola Zivaljevic, M.D.* and found at the [National Sciente Foundation Multimedia Gallery](https://www.nsf.gov/news/mmg/mmg_disp.jsp?med_id=52110](https://www.nsf.gov/news/mmg/mmg_disp.jsp?med_id=52110), will be used in this project.
+
+## Authors
+
+André Scheibel de Almada 9292952
+Cho Young Lim 6436060
+Eduardo Garcia Misiuk 9293230
 
 # Dependencies
 ## Packages
