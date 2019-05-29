@@ -1,7 +1,7 @@
 # X-Ray Images Enhancement
 
 ## Abstract
-The main objective of this project is to improve the visualization of fractured bones using three image enhancement algorithms: **contrast limited adaptive histogram equalization** (CLAHE), **unsharping mask** (UM) and T.B.D. After implementing these algorithms, we will discuss about the results and the difficulties found during the development of the project.
+The main objective of this project is to improve the visualization of fractured bones using three image enhancement algorithms: **contrast limited adaptive histogram equalization** (CLAHE), **unsharping mask** (UM) and  **high-frequency emphasis filtering** (HEF) After implementing these algorithms, we will discuss about the results and the difficulties found during the development of the project.
 
 ## Example Image
 
