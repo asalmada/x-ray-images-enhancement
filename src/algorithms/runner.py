@@ -10,7 +10,7 @@ class AlgorithmRunner:
 		self.algorithm		= algorithm
 		self.image				= image
 		self.images_path	= images_path
-		self.results_path	= os.path.join("results", datetime.now())
+		self.results_path	= os.path.join("results", str(datetime.now()))
 
 		os.makedirs(self.results_path, exist_ok=True)
 
@@ -32,8 +32,13 @@ class AlgorithmRunner:
 			path = ""
 
 		for image in images:
+			if len(images) is not 1:
+				self.image = image
+			else:
+				self.image = self.image.split('/')[1]
+
 			image = self.__run_algorithm(image, path)
-			imageio.imwrite(self.results_path, image)
+			imageio.imwrite(os.path.join(self.results_path, self.image), image)
 
 	def __run_algorithm(self, image, path):
 		'''Runs the algorithm in the image.
