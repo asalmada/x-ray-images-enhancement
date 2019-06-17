@@ -1,5 +1,5 @@
 import src.arguments as ah
-import src.algorithms.runner as ar
+from src.algorithms.runner import AlgorithmRunner
 
 def main():
   arg_handler = ah.ArgumentHandler()
@@ -8,8 +8,8 @@ def main():
   image     = arg_handler.get_image()
   path      = arg_handler.get_path()
 
-  algorithm_runner = ar.AlgorithmRunner(algorithm, image, path)
-  algorithm_runner.run()
+  ar = AlgorithmRunner(algorithm, image, path)
+  ar.run()
 
 if __name__ == "__main__":
   main()

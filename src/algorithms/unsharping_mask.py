@@ -4,11 +4,11 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from base import BaseAlgorithm
- 
+
 class UM(BaseAlgorithm):
     def __init__(self, filename):
         self.filename = filename
- 
+
     def run(self):
         # https://stackoverflow.com/questions/2938162/how-does-an-unsharp-mask-work
         # https://en.wikipedia.org/wiki/Unsharp_masking
