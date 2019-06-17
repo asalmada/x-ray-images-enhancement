@@ -30,20 +30,17 @@ Besides the first image (001.tif), found at the [National Sciente Foundation Mul
 
 ## Libraries
 Setup the repository by following the instructions from [installation](installation) section.  
-After activating the environment, install these libraries.
+After activating the environment, install these libraries using `pip install`.
 
-### numpy
-`pip install numpy`
-
-### scipy
-`pip install scipy`
-
-### imageio
-`pip install imageio`
+- NumPy: `numpy`
+- SciPy: `scipy`
+- ImageIO: `imageio`
+- OpenCV: `opencv-python`
 
 # Installation
 Clone the repository with `git clone https://github.com/asalmada/x-ray-images-enhancement`.  
 Run `python3 -m venv x-ray-images-enhancement` to install the environment in the repository.
 
 ## Environment
-To activate, run `source bin/activate` and to deactivate, run `deactivate`.
+To activate, run `source bin/activate` in Linux or `source Scripts/activate` in Windows.  
+To deactivate, run `deactivate`.
