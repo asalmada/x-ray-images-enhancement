@@ -55,6 +55,7 @@ class AlgorithmRunner:
 		'''
 
 		img = os.path.join(path, image)
+		alg = None
 
 		# UM (Unsharping Mask)
 		if self.algorithm == 'um':
