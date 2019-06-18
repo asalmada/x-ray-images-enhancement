@@ -1,7 +1,7 @@
-import cv2
 import imageio
 import numpy as np
-from matplotlib import pyplot as plt
+from scipy.ndimage.filters import gaussian_filter
+from skimage import img_as_float
 
 from .base import BaseAlgorithm
 
@@ -10,31 +10,20 @@ class UM(BaseAlgorithm):
 		self.filename = filename
 
 	def run(self):
-		# https://stackoverflow.com/questions/2938162/how-does-an-unsharp-mask-work
-		# https://en.wikipedia.org/wiki/Unsharp_masking
+
+		# TODO: Choose values from param args
+		radius = 5
+		amount = 2
+
 		image = imageio.imread(self.filename)
-		n,m = image.shape[0], image.shape[1]
-		weight = 0.8
-		threshold = 190
+		image = img_as_float(image) # ensuring float values for computations
 
-		blurred_image = cv2.GaussianBlur(image,(7,7),0)
-		mask = image - blurred_image
+		# TODO: Add another options, like the median filter
+		blurred_image = gaussian_filter(image, sigma=radius)
+		mask = image - blurred_image # keep the edges created by the blur
+		sharpened_image = image + mask * amount
 
-		# TODO Get another version of the image with
-		# higher contrast to use in this operation
-		for x in range(n):
-				for y in range(m):
-						new_value = weight * mask[x,y]
+		sharpened_image = np.clip(sharpened_image, float(0), float(1)) # Interval [0.0, 1.0]
+		sharpened_image = (sharpened_image*255).astype(np.uint8) # Interval [0,255]
 
-						if(np.all(new_value) > threshold):
-								image[x,y] = image[x,y] + new_value
-
-		# Debugging
-		#plt.imshow(blurred_image, cmap="gray")
-		#plt.show()
-		plt.imshow(mask, cmap="gray")
-		plt.show()
-		plt.imshow(image, cmap="gray")
-		plt.show()
-
-		return image
+		return sharpened_image
