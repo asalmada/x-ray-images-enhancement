@@ -1,15 +1,18 @@
 import os
+import imageio
+
 from datetime import datetime
 
-import imageio
+import src.arguments as ah
 
 from src.algorithms.unsharping_mask import UM
 
 class AlgorithmRunner:
-	def __init__(self, algorithm, image, images_path):
-		self.algorithm		= algorithm
-		self.image				= image
-		self.images_path	= images_path
+	def __init__(self):
+		self.arg_handler	= ah.ArgumentHandler()
+		self.algorithm		= self.arg_handler.get_algorithm()
+		self.image				= self.arg_handler.get_image()
+		self.images_path	= self.arg_handler.get_path()
 		self.results_path	= os.path.join("results", str(datetime.now()))
 
 		os.makedirs(self.results_path, exist_ok=True)
@@ -32,13 +35,14 @@ class AlgorithmRunner:
 			path = ""
 
 		for image in images:
-			if len(images) is not 1:
-				self.image = image
+			split_image = image.split('/')
+			if len(split_image) != 1:
+				self.image = split_image[-1]
 			else:
-				self.image = self.image.split('/')[1]
+				self.image = image
 
-			image = self.__run_algorithm(image, path)
-			imageio.imwrite(os.path.join(self.results_path, self.image), image)
+			processed_image = self.__run_algorithm(image, path)
+			imageio.imwrite(os.path.join(self.results_path, self.image), processed_image)
 
 	def __run_algorithm(self, image, path):
 		'''Runs the algorithm in the image.
@@ -51,6 +55,7 @@ class AlgorithmRunner:
 		'''
 
 		img = os.path.join(path, image)
+		alg = None
 
 		# UM (Unsharping Mask)
 		if self.algorithm == 'um':
