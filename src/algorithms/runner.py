@@ -4,6 +4,7 @@ from datetime import datetime
 import imageio
 
 from src.algorithms.unsharping_mask import UM
+from src.algorithms.hef import HEF
 
 class AlgorithmRunner:
 	def __init__(self, algorithm, image, images_path):
@@ -55,7 +56,9 @@ class AlgorithmRunner:
 		# UM (Unsharping Mask)
 		if self.algorithm == 'um':
 			alg = UM(img)
-		# TODO: HEF
+		# HEF
+		if self.algorithm == 'hef':
+			alg = HEF(img)
 		# TODO: N-CLAHE
 
 		image = alg.run()
