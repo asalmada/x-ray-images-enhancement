@@ -7,6 +7,7 @@ import src.arguments as ah
 
 from src.algorithms.unsharping_mask import UM
 from src.algorithms.clahe import CLAHE
+from src.algorithms.hef import HEF
 
 class AlgorithmRunner:
 	def __init__(self):
@@ -61,10 +62,12 @@ class AlgorithmRunner:
 		# UM (Unsharping Mask)
 		if self.algorithm == 'um':
 			alg = UM(img)
-		# TODO: HEF
 		# CLAHE
 		if self.algorithm == 'clahe':
 			alg = CLAHE(img)
+		# HEF
+		if self.algorithm == 'hef':
+			alg = HEF(img)
 
 		image = alg.run()
 

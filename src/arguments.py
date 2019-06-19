@@ -13,7 +13,7 @@ class ArgumentHandler:
 		group.add_argument("-i", metavar="img", type=str, help="image to be processed")
 		group.add_argument("-p", metavar="path", type=str, help="path to the images to be processed")
 
-		self.__parser.add_argument("-a", metavar="alg", type=str, help="algorithm to be used", required=True, choices=["clahe", "um"])
+		self.__parser.add_argument("-a", metavar="alg", type=str, help="algorithm to be used", required=True, choices=["nclahe", "um", "hef"])
 
 	def get_image(self):
 		'''Gets the image from argument -i.'''

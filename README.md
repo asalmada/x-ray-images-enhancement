@@ -57,6 +57,7 @@ After activating the environment, install these libraries using `pip install`.
 - SciPy: `scipy`
 - ImageIO: `imageio`
 - OpenCV: `opencv-python`
+- Scikit Image: `scikit-image`
 
 # Installation
 Clone the repository with `git clone https://github.com/asalmada/x-ray-images-enhancement`.  
