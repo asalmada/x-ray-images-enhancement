@@ -1,7 +1,7 @@
 # X-Ray Images Enhancement
 
 ## Abstract
-The main objective of this project is to improve the visualization of fractured bones using three image enhancement algorithms: **contrast limited adaptive histogram equalization** (CLAHE), **unsharping mask** (UM) and  **high-frequency emphasis filtering** (HEF) After implementing these algorithms, we will discuss about the results and the difficulties found during the development of the project.
+The main objective of this project is to improve the visualization of fractured bones using three image enhancement algorithms: **contrast limited adaptive histogram equalization** (CLAHE), **unsharp masking** (UM) and  **high-frequency emphasis filtering** (HEF) After implementing these algorithms, we will discuss about the results and the difficulties found during the development of the project.
 
 ## Example Image
 
@@ -13,6 +13,28 @@ Unprocessed images of x-ray films, like this one of a chest, made by *Nikola Ziv
 ## Images Source
 
 Besides the first image (001.tif), found at the [National Sciente Foundation Multimedia Gallery](https://www.nsf.gov/news/mmg/mmg_disp.jsp?med_id=52110), all the other images used were founded at the [National Library of Medicine MedPix](https://medpix.nlm.nih.gov/home), a free open source database with over 59,000 indexed and curated images, organized, reviewed, approved, and curated free of charge for personal use and for local teaching at institutions.
+
+# X-Ray Images Enhancement - Final Report
+
+## Unsharp Masking
+
+Unsharp masking is a linear filter that is capable of amplify high-frequencies of an image. The first registry of this technique was made in Germany, during the 30s, in order to get a better resolution for some photos. In modern days, the same filter is used as a feature in present's image editing software, like GIMP or Photoshop.
+
+The first step of the algorithm is to copy the original image and apply a gaussian blur into it (Blur intensity is defined by a setting called **Radius**).\
+If we subtract the blurred image from the original image, we will obtain only the edges created by the blur. This is what we call **unsharped mask**.\
+Finally, the enhanced image is collected after applying the following formula:
+```
+sharpened image = original image + amount * (unsharped mask)
+```
+The **radius** setting is related to the blur intensity (as explained before) because it defines the size of the edges. The **amount** setting, on the other hand, controls the intensity of the edges (how much dark or light it will be).
+
+### Results
+Even though this technique is quite simple, it's also very powerfull because we can have satisfying results with a linear time complexity O(n).
+
+| Original Image  :|: Enhanced Image |
+| ------------- | ------------- |
+| ![](https://i.imgur.com/S6HvNm8.jpg)  | ![](https://i.imgur.com/HD2IBfF.jpg)  |
+| Content Cell  | Content Cell  |
 
 ## Authors
 
