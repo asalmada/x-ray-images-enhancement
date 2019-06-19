@@ -6,6 +6,7 @@ import imageio
 from matplotlib import pyplot as plt
 
 from .base import BaseAlgorithm
+import src.utils as pu
 
 
 class HEF(BaseAlgorithm):
@@ -18,14 +19,8 @@ class HEF(BaseAlgorithm):
         m = image.shape[0]
         n = image.shape[1]
 
-        blurred_image = np.zeros((m, n))
         if len(image.shape) == 3:
-            for i in range(m):
-                for j in range(n):
-                    red_v = image[i][j][0] * 0.299
-                    green_v = image[i][j][1] * 0.587
-                    blue_v = image[i][j][2] * 0.144
-                    blurred_image[i][j] = red_v + green_v + blue_v
+            blurred_image = pu.to_grayscale(image)
 
         fftimg = fft2(blurred_image)
         sfftimg = fftshift(fftimg)
@@ -62,4 +57,4 @@ class HEF(BaseAlgorithm):
         # plt.axis('off')
         # plt.show()
 
-        return image
+        return image.astype(np.uint8)
