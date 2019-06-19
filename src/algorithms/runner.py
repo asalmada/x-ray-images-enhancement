@@ -6,6 +6,7 @@ from datetime import datetime
 import src.arguments as ah
 
 from src.algorithms.unsharping_mask import UM
+from src.algorithms.clahe import CLAHE
 
 class AlgorithmRunner:
 	def __init__(self):
@@ -61,7 +62,9 @@ class AlgorithmRunner:
 		if self.algorithm == 'um':
 			alg = UM(img)
 		# TODO: HEF
-		# TODO: N-CLAHE
+		# CLAHE
+		if self.algorithm == 'clahe':
+			alg = CLAHE(img)
 
 		image = alg.run()
 
