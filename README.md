@@ -39,11 +39,9 @@ Even though this technique is quite simple, it's also very powerfull because we 
 
 For our algorithm's comparisons, we will use a [Toddler's Fracture of a Left Tibia](https://medpix.nlm.nih.gov/case?id=118ab4b1-3fa7-4ce8-b332-6b6ce0632d90) from a 3 years old pacient. Fractures of the tibia and fibula are the most common injuries of the lower limbs in children. 
 
-![](docs/toddlers_fracture_highlight.jpg)
-
-| UM  | HEF | CLAHE |
-| ------------- | ------------- | ------------- |
-| ![](docs/toddlers_fracture_um.jpg) | SOON | SOON |
+| Original | UM  | HEF | CLAHE |
+| ------------- | ------------- | ------------- | ------------- |
+![](docs/toddlers_fracture_highlight.jpg) | ![](docs/toddlers_fracture_um.jpg) | SOON | SOON |
 
 
 ## Authors
