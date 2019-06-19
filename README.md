@@ -31,10 +31,9 @@ The **radius** setting is related to the blur intensity (as explained before) be
 ### Results
 Even though this technique is quite simple, it's also very powerfull because we can have satisfying results with a linear time complexity O(n).
 
-| Original Image  :|: Enhanced Image |
+| Original Image  | Enhanced Image |
 | ------------- | ------------- |
 | ![](https://i.imgur.com/S6HvNm8.jpg)  | ![](https://i.imgur.com/HD2IBfF.jpg)  |
-| Content Cell  | Content Cell  |
 
 ## Authors
 
