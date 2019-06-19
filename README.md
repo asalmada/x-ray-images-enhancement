@@ -66,3 +66,6 @@ Run `python3 -m venv x-ray-images-enhancement` to install the environment in the
 ## Environment
 To activate, run `source bin/activate` in Linux or `source Scripts/activate` in Windows.  
 To deactivate, run `deactivate`.
+
+# Demonstration
+To run the demonstration, run `chmod 755 demo.sh` and then `./demo.sh`.
