@@ -4,7 +4,7 @@ class BaseAlgorithm(ABC):
 	'''Class that must be inherited for each algorithm.'''
 
 	@abstractmethod
-	def __init__(self, filename):
+	def __init__(self, filename, results_path):
 		raise NotImplementedError
 
 	@abstractmethod
