@@ -3,14 +3,22 @@ import src.utils as pu
 
 import numpy as np
 import imageio
+import matplotlib.pyplot as plt
+import os
+import timeit
 
 from collections import Counter
 
 class CLAHE(BaseAlgorithm):
-	'''Contrast Limited Adaptive Histogram Equalization'''
+	'''Contrast Limited Adaptive Histogram Equalization.
+	In reality, we do a normalization before applying CLAHE, making it the N-CLAHE method, but in
+	N-CLAHE the normalization is done using a log function, instead of a linear one, as we use here.
+	'''
 
-	def __init__(self, filename):
+	def __init__(self, filename, results_path):
 		self.filename = filename
+		self.results_path = results_path
+		self.get_input()
 
 	def run(self):
 		image = imageio.imread(self.filename)
@@ -18,39 +26,46 @@ class CLAHE(BaseAlgorithm):
 		if len(image.shape) > 2:
 			image = pu.to_grayscale(image)
 
-		shape = image.shape
 		normalized_image = pu.normalize(np.min(image), np.max(image), 0, 255, image)
+		imageio.imwrite(os.path.join(self.results_path, "normalized_image.jpg"), normalized_image)
 
-		window_size = 20
-		clip_limit = 20
+		start = timeit.default_timer()
+		equalized_image = self.clahe(normalized_image)
+		stop = timeit.default_timer()
 
-		equalized_image = self.clahe(normalized_image, window_size, clip_limit)
+		self.export_histogram(image, normalized_image, equalized_image)
+		self.export_run_info(stop - start)
 
 		return equalized_image
 
-	def clahe(self, image, window_size, clip_limit):
+	def get_input(self):
+		print("Window size: ")
+		self.window_size = int(input())
+		print("Clip limit: ")
+		self.clip_limit = int(input())
+
+	def clahe(self, image):
 		'''Applies the CLAHE algorithm in an image.
 
 		Parameters:
 			image: image to be processed.
-			window_size: size of the window used to calculate the transform function.
-			clip_limit: histogram clipping limit.
 
 		Returns a processed image.
 		'''
 
-		border = window_size // 2
-		max_val = 255
+		border = self.window_size // 2
+
 		padded_image = np.pad(image, border, "reflect")
 		shape = padded_image.shape
 		padded_equalized_image = np.zeros(shape).astype(np.uint8)
 
 		for i in range(border, shape[0] - border):
+			print(f"Line: {i}")
 			for j in range(border, shape[1] - border):
 				# Region to extract the histogram
 				region = padded_image[i-border:i+border+1, j-border:j+border+1]
 				# Calculating the histogram from region
-				clipped_hist = self.clipped_histogram_equalization(region, max_val, clip_limit)
+				clipped_hist = self.clipped_histogram_equalization(region)
 				# Changing the value of the image to the result from the CDF for the given pixel
 				padded_equalized_image[i][j] = clipped_hist[padded_image[i][j]]
 
@@ -59,13 +74,11 @@ class CLAHE(BaseAlgorithm):
 
 		return equalized_image
 
-	def clipped_histogram_equalization(self, region, max_val, clip_limit):
+	def clipped_histogram_equalization(self, region):
 		'''Calculates the clipped histogram equalization for the given region.
 
 		Parameters:
 			region: array-like.
-			max_val: max value for the image
-			clip_limit: max value for a pixel in the histogram.
 
 		Returns a dictionary with the CDF for each pixel in the region.
 		'''
@@ -77,9 +90,9 @@ class CLAHE(BaseAlgorithm):
 		# Removing values above clip_limit
 		excess = 0
 		for i in range(n_bins):
-			if hist[i] > clip_limit:
-				excess += hist[i] - clip_limit
-				hist[i] = clip_limit
+			if hist[i] > self.clip_limit:
+				excess += hist[i] - self.clip_limit
+				hist[i] = self.clip_limit
 
 		## Redistributing exceding values ##
 		# Calculating the values to be put on all bins
@@ -96,10 +109,33 @@ class CLAHE(BaseAlgorithm):
 		# Calculating the CDF (Cumulative Distribution Function)
 		cdf = np.cumsum(pixel_probability)
 
-		cdf_normalized = cdf * max_val
+		cdf_normalized = cdf * 255
 
 		hist_eq = {}
 		for i in range(len(cdf)):
 			hist_eq[bins[i]] = int(cdf_normalized[i])
 
 		return hist_eq
+
+	def export_histogram(self, image, normalized, equalized):
+		plt.xlabel("Pixel")
+		plt.ylabel("Count")
+
+		hist, bins = pu.histogram(image)
+		plt.plot(bins, hist, label='Original Image')
+		plt.legend()
+
+		hist, bins = pu.histogram(normalized)
+		plt.plot(bins, hist, label='Normalized Image')
+		plt.legend()
+
+		hist, bins = pu.histogram(equalized)
+		plt.plot(bins, hist, label='CLAHE Result')
+		plt.legend()
+		plt.savefig(os.path.join(self.results_path, "histograms.jpg"))
+
+	def export_run_info(self, runtime):
+		with open(os.path.join(self.results_path, "runinfo.txt"), 'w+') as f:
+			f.write(f"Runtime: {runtime:.2f}s\n")
+			f.write(f"Window size: {self.window_size}\n")
+			f.write(f"Clip limit: {self.clip_limit}\n")
