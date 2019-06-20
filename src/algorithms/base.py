@@ -9,4 +9,10 @@ class BaseAlgorithm(ABC):
 
 	@abstractmethod
 	def run(self):
+		'''Runs the algorithm, returning an image normalized to [0, 255].'''
+		raise NotImplementedError
+
+	@abstractmethod
+	def get_input(self):
+		'''Receives the input for the algorithm. It can be any variable, like window size in CLAHE.'''
 		raise NotImplementedError
