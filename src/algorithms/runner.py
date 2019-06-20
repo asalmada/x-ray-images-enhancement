@@ -44,7 +44,9 @@ class AlgorithmRunner:
 				self.image = image
 
 			processed_image = self.__run_algorithm(image, path)
-			imageio.imwrite(os.path.join(self.results_path, self.image), processed_image)
+			t = datetime.now()
+			filename = f"{t.hour}_{t.minute}_{t.second}_{self.image}"
+			imageio.imwrite(os.path.join(self.results_path, filename), processed_image)
 
 	def __run_algorithm(self, image, path):
 		'''Runs the algorithm in the image.
@@ -64,11 +66,14 @@ class AlgorithmRunner:
 			alg = UM(img)
 		# CLAHE
 		if self.algorithm == 'clahe':
-			alg = CLAHE(img)
+			alg = CLAHE(img, self.results_path)
 		# HEF
 		if self.algorithm == 'hef':
 			alg = HEF(img)
 
-		image = alg.run()
-
-		return image
+		try:
+			image = alg.run()
+		except Exception as e:
+			print(e)
+		else:
+			return image
