@@ -41,7 +41,7 @@ For our algorithm's comparisons, we will use a [Toddler's Fracture of a Left Tib
 
 | Original | UM  | HEF | CLAHE |
 | ------------- | ------------- | ------------- | ------------- |
-![](docs/toddlers_fracture_highlight.jpg) | ![](docs/toddlers_fracture_um.jpg) | SOON | SOON |
+![](docs/toddlers_fracture_highlight.jpg) | ![](docs/toddlers_fracture_um.jpg) | SOON | ![](docs/toddlers_fracture_clahe.jpg) |
 
 
 ## Authors
