@@ -33,11 +33,21 @@ Even though this technique is quite simple, it's also very powerfull because we 
 
 | Original Image  | Enhanced Image |
 | ------------- | ------------- |
-| ![](images/055.jpg)  | ![](https://i.imgur.com/HD2IBfF.jpg)  |
+| ![](images/055.jpg)  | ![](docs/055_um_gaussian.jpg)  |
+| ![](images/011.jpg)  | ![](docs/011_um.jpg)  |
+| ![](images/060.jpg)  | ![](docs/060_um.jpg)  |
+| ![](images/029.jpg)  | ![](docs/029_um.jpg)  |
+| ![](images/043.jpg)  | ![](docs/043_um.jpg)  |
+
+It's not really necessary apply only the gaussian filter in order to get the unsharpened mask. In fact, the project also tested another filters studied at class:
+
+| Original Image  | Gaussian Filter | Median Filter | Maximum Filter | Minimum Filter |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| ![](images/055.jpg)  | ![](docs/055_um_gaussian.jpg) | ![](docs/055_um_median.jpg) | ![](docs/055_um_maximum.jpg) | ![](docs/055_um_minimum.jpg) |
 
 ## Conclusion
 
-For our algorithm's comparisons, we will use a [Toddler's Fracture of a Left Tibia](https://medpix.nlm.nih.gov/case?id=118ab4b1-3fa7-4ce8-b332-6b6ce0632d90) from a 3 years old pacient. Fractures of the tibia and fibula are the most common injuries of the lower limbs in children. 
+For our algorithm's comparisons, we will use a [Toddler's Fracture of a Left Tibia](https://medpix.nlm.nih.gov/case?id=118ab4b1-3fa7-4ce8-b332-6b6ce0632d90) from a 3 years old pacient. Children ofter have injuries of the tibia and fibula in their lower limbs. 
 
 | Original | UM  | HEF | CLAHE |
 | ------------- | ------------- | ------------- | ------------- |
