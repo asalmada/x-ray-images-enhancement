@@ -53,6 +53,15 @@ For our algorithm's comparisons, we will use a [Toddler's Fracture of a Left Tib
 | ------------- | ------------- | ------------- | ------------- |
 ![](docs/toddlers_fracture_highlight.jpg) | ![](docs/toddlers_fracture_um.jpg) | SOON | SOON |
 
+Two other images from the same case, a [Nonossifying Fibroma](https://medpix.nlm.nih.gov/case?id=410b3692-dd34-47f5-a97d-4b422ca02a96) from someone who got kicked in the shin while playing soccer, can also be used to check our results.
+
+| Original | UM  | HEF | CLAHE |
+| ------------- | ------------- | ------------- | ------------- |
+![](images/nonossifying_fibroma1.jpg) | ![](docs/nonossifying_fibroma1_um.jpg) | SOON | SOON |
+
+| Original | UM  | HEF | CLAHE |
+| ------------- | ------------- | ------------- | ------------- |
+![](images/nonossifying_fibroma2.jpg) | ![](docs/nonossifying_fibroma2_um.jpg) | SOON | SOON |
 
 ## Authors
 
