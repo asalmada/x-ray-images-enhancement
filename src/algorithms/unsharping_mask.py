@@ -11,14 +11,12 @@ class UM(BaseAlgorithm):
 
 	def run(self):
 
-		# TODO: Choose values from param args
 		radius = 5
 		amount = 2
 
 		image = imageio.imread(self.filename)
 		image = img_as_float(image) # ensuring float values for computations
 
-		# TODO: Add another options, like the median filter
 		blurred_image = gaussian_filter(image, sigma=radius)
 		mask = image - blurred_image # keep the edges created by the blur
 		sharpened_image = image + mask * amount
