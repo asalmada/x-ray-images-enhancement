@@ -75,7 +75,6 @@ After activating the environment, install these libraries using `pip install`.
 - NumPy: `numpy`
 - SciPy: `scipy`
 - ImageIO: `imageio`
-- OpenCV: `opencv-python`
 - Scikit Image: `scikit-image`
 
 # Installation
