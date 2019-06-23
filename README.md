@@ -79,12 +79,7 @@ Two other images from the same case, a [Nonossifying Fibroma](https://medpix.nlm
 
 ## Libraries
 Setup the repository by following the instructions from [installation](installation) section.  
-After activating the environment, install these libraries using `pip install`.
-
-- NumPy: `numpy`
-- SciPy: `scipy`
-- ImageIO: `imageio`
-- Scikit Image: `scikit-image`
+After activating the environment, run `pip install -r requirements.txt` to install the libraries.
 
 # Installation
 Clone the repository with `git clone https://github.com/asalmada/x-ray-images-enhancement`.  
