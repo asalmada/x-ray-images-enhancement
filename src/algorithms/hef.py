@@ -41,7 +41,7 @@ class HEF(BaseAlgorithm):
         high_filter = k1 + k2*filter_array
 
         img_filtered = high_filter * img_sfft
-        img_hef = np.real(ifft2(fftshift(img_filtered)))
+        img_hef = np.real(ifft2(fftshift(img_filtered)))  # HFE filtering done
 
         # HE part
         # Building the histogram

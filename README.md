@@ -45,23 +45,46 @@ It's not really necessary apply only the gaussian filter in order to get the uns
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | ![](images/055.jpg)  | ![](docs/055_um_gaussian.jpg) | ![](docs/055_um_median.jpg) | ![](docs/055_um_maximum.jpg) | ![](docs/055_um_minimum.jpg) |
 
+
+
+## High-frequency Emphasis filtering
+
+High-frequency Emphasis filtering is a technique that uses Gaussian High Pass Filter to emphasis and accentuate the edges. The edges tend to be expressed in the high-frequency spectrum since they have more drastic changes of intensity. This technique produce a low contrast image and the use of Histogram Equalization is required to increase both sharpness and contrast.
+
+The first step of the algorithm is to copy the original image and apply a gaussian high pass filter into it (Sharpness intensity is defined by a setting called **Radius**).\
+Then we add the high-frequency filter to the original image.
+Finally, the contrast of the image will be adjusted with simple Histogram Equalization: 
+```
+sharpened image = (original image + (Gaussian Highpass Filter)) * (Histogram Equalization)
+```
+
+### Results
+
+| Original Image  | Enhanced Image |
+| ------------- | ------------- |
+| ![](images/016.jpg)  | ![](docs/016_hef.jpg)  |
+| ![](images/002.jpg)  | ![](docs/002_hef.jpg)  |
+| ![](images/003.jpg)  | ![](docs/003_hef.jpg)  |
+
+
+
 ## Conclusion
 
 For our algorithm's comparisons, we will use a [Toddler's Fracture of a Left Tibia](https://medpix.nlm.nih.gov/case?id=118ab4b1-3fa7-4ce8-b332-6b6ce0632d90) from a 3 years old pacient. Children ofter have injuries of the tibia and fibula in their lower limbs. 
 
 | Original | UM  | HEF | CLAHE |
 | ------------- | ------------- | ------------- | ------------- |
-![](docs/toddlers_fracture_highlight.jpg) | ![](docs/toddlers_fracture_um.jpg) | SOON | ![](docs/toddlers_fracture_clahe.jpg) |
+![](docs/toddlers_fracture_highlight.jpg) | ![](docs/toddlers_fracture_um.jpg) | ![](docs/toddlers_fracture_hef.jpg) | ![](docs/toddlers_fracture_clahe.jpg) |
 
 Two other images from the same case, a [Nonossifying Fibroma](https://medpix.nlm.nih.gov/case?id=410b3692-dd34-47f5-a97d-4b422ca02a96) from someone who got kicked in the shin while playing soccer, can also be used to check our results.
 
 | Original | UM  | HEF | CLAHE |
 | ------------- | ------------- | ------------- | ------------- |
-![](images/nonossifying_fibroma1.jpg) | ![](docs/nonossifying_fibroma1_um.jpg) | SOON | SOON |
+![](images/nonossifying_fibroma1.jpg) | ![](docs/nonossifying_fibroma1_um.jpg) | ![](docs/nonossifying_fibroma1_hef.jpg) | SOON |
 
 | Original | UM  | HEF | CLAHE |
 | ------------- | ------------- | ------------- | ------------- |
-![](images/nonossifying_fibroma2.jpg) | ![](docs/nonossifying_fibroma2_um.jpg) | SOON | SOON |
+![](images/nonossifying_fibroma2.jpg) | ![](docs/nonossifying_fibroma2_um.jpg) | ![](docs/nonossifying_fibroma2_hef.jpg) | SOON |
 
 ## Authors
 
