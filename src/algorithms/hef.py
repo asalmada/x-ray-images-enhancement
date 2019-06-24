@@ -1,60 +1,62 @@
-#High-frequency Emphasis filtering algorithm
+# High-frequency Emphasis filtering algorithm
 
 import numpy as np
 from scipy.fftpack import fft2, ifft2, fftshift
 import imageio
-from matplotlib import pyplot as plt
-
 from .base import BaseAlgorithm
 import src.utils as pu
 
 
 class HEF(BaseAlgorithm):
-    def __init__(self, filename):
+    def __init__(self, filename, results_path):
         self.filename = filename
+        self.get_input()
+        self.results_path = results_path
+
+    def get_input(self):
+        print(
+            "Select D0 value for High cut (10 to 90): ")
+        self.d0v = int(input())
+        assert 10 <= self.d0v <= 90
 
     def run(self):
         '''Runs the algorithm for the image.'''
         image = imageio.imread(self.filename)
-        m = image.shape[0]
-        n = image.shape[1]
 
         if len(image.shape) == 3:
             blurred_image = pu.to_grayscale(image)
 
-        fftimg = fft2(blurred_image)
-        sfftimg = fftshift(fftimg)
+        # HF part
+        img_fft = fft2(blurred_image)  # img after fourier transformation
+        img_sfft = fftshift(img_fft)  # img after shifting component to the center
 
-        m, n = sfftimg.shape
-        H = np.zeros((m, n))
-        D0 = 40
+        m, n = img_sfft.shape
+        filter_array = np.zeros((m, n))
+
         for i in range(m):
             for j in range(n):
-                H[i, j] = 1.0 - np.exp(- ((i - m / 2.0) ** 2 + (j - n / 2.0) ** 2) / (2 * (D0 ** 2)))
+                filter_array[i, j] = 1.0 - np.exp(- ((i-m / 2.0) ** 2 + (j-n / 2.0) ** 2) / (2 * (self.d0v ** 2)))
         k1 = 0.5
         k2 = 0.75
-        filter = k1 + k2 * H
+        high_filter = k1 + k2*filter_array
 
-        shfe = filter * sfftimg
-        hfe = np.real(ifft2(fftshift(shfe)))
+        img_filtered = high_filter * img_sfft
+        img_hef = np.real(ifft2(fftshift(img_filtered)))  # HFE filtering done
 
-        image_histogram, bins = np.histogram(hfe.flatten(), 256,
-                                             density=True)
+        # HE part
+        # Building the histogram
+        hist, bins = pu.histogram(img_hef)
+        # Calculating probability for each pixel
+        pixel_probability = hist / hist.sum()
+        # Calculating the CDF (Cumulative Distribution Function)
+        cdf = np.cumsum(pixel_probability)
+        cdf_normalized = cdf * 255
+        hist_eq = {}
+        for i in range(len(cdf)):
+            hist_eq[bins[i]] = int(cdf_normalized[i])
 
-        cdf = image_histogram.cumsum()
-        cdf = 255 * cdf / cdf[-1]
-        image_equalized = np.interp(hfe.flatten(), bins[:-1], cdf)
-
-        image = image_equalized.reshape(hfe.shape)
-
-        # plt.subplot(121)
-        # plt.imshow(blurred_image, cmap="gray")
-        # plt.title('original image')
-        # plt.axis('off')
-        # plt.subplot(122)
-        # plt.imshow(image, cmap="gray")
-        # plt.title('High-frequency Emphasis')
-        # plt.axis('off')
-        # plt.show()
+        for i in range(m):
+            for j in range(n):
+                image[i][j] = hist_eq[img_hef[i][j]]
 
         return image.astype(np.uint8)

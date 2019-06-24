@@ -74,7 +74,7 @@ class AlgorithmRunner:
 			alg = CLAHE(img, self.results_path)
 		# HEF
 		if self.algorithm == 'hef':
-			alg = HEF(img)
+			alg = HEF(img, self.results_path)
 
 		try:
 			image = alg.run()
