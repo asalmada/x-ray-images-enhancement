@@ -15,19 +15,20 @@ class HEF(BaseAlgorithm):
 
     def get_input(self):
         print(
-            "Select D0 value for High cut (10 to 90): ")
+            "Select D0 value for High cut (1 to 90): ")
         self.d0v = int(input())
-        assert 10 <= self.d0v <= 90
+        assert 1 <= self.d0v <= 90
 
     def run(self):
         '''Runs the algorithm for the image.'''
         image = imageio.imread(self.filename)
 
         if len(image.shape) == 3:
-            blurred_image = pu.to_grayscale(image)
-
+            img_grayscale = pu.to_grayscale(image)
+        img = pu.normalize(np.min(img_grayscale), np.max(image), 0, 255,
+                                        img_grayscale)
         # HF part
-        img_fft = fft2(blurred_image)  # img after fourier transformation
+        img_fft = fft2(img)  # img after fourier transformation
         img_sfft = fftshift(img_fft)  # img after shifting component to the center
 
         m, n = img_sfft.shape

@@ -124,12 +124,21 @@ To compare the effects of the parameters, several different runs were made with 
 
 High-frequency Emphasis filtering is a technique that uses Gaussian High Pass Filter to emphasis and accentuate the edges. The edges tend to be expressed in the high-frequency spectrum since they have more drastic changes of intensity. This technique produce a low contrast image and the use of Histogram Equalization is required to increase both sharpness and contrast.
 
-The first step of the algorithm is to copy the original image and apply a gaussian high pass filter into it (Sharpness intensity is defined by a setting called **Radius**).\
-Then we add the high-frequency filter to the original image.
-Finally, the contrast of the image will be adjusted with simple Histogram Equalization: 
+The first step of the algorithm is to apply a gaussian high pass filter into it (Sharpness intensity is defined by a setting called **Radius**). The image have to go through the Fourier transformation and the filter function is calculated onto it. After the inverse transformation we will have filtered image.
+Secondly, the contrast of the image will be adjusted with simple Histogram Equalization: 
 ```
 sharpened image = (original image + (Gaussian Highpass Filter)) * (Histogram Equalization)
 ```
+
+### Comparison between parameters
+
+High-frequency Emphasis filtering is a kind of 2D Fourier filtering. High pass filter have the value of D0 which is the cut off distance from the center of the shifted, fourier image.
+
+| D0 = 10  | D0 = 90 |
+| ------------- | ------------- |
+| ![](docs/nonossifying_fibroma1_he10.jpg)  | ![](docs/nonossifying_fibroma1_hef90.jpg)  |
+
+
 ### Results
 
 | Original Image  | Enhanced Image |
