@@ -2,6 +2,9 @@ bin
 pyvenv.cfg
 share
 .vscode
+Scripts
+include
+results
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
