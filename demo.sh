@@ -11,7 +11,7 @@ python app.py -a um -i images/043.jpg
 echo "Done!"
 
 echo "Running CLAHE for image images/001.tif..."
-python app.py -a clahe -i images/001.tif
+python app.py -a clahe -i images/001.tif < test_cases/40_4_1.in
 echo "Done!"
 
 deactivate

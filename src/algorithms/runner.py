@@ -15,7 +15,11 @@ class AlgorithmRunner:
 		self.algorithm		= self.arg_handler.get_algorithm()
 		self.image				= self.arg_handler.get_image()
 		self.images_path	= self.arg_handler.get_path()
-		self.results_path	= os.path.join("results", str(datetime.now()))
+		output_path = self.arg_handler.get_output_path()
+		if output_path:
+			self.results_path = output_path
+		else:
+			self.results_path	= os.path.join("results", str(datetime.now()))
 
 		os.makedirs(self.results_path, exist_ok=True)
 
@@ -45,7 +49,8 @@ class AlgorithmRunner:
 
 			processed_image = self.__run_algorithm(image, path)
 			t = datetime.now()
-			filename = f"{t.hour}_{t.minute}_{t.second}_{self.image}"
+			name = self.image.split(".")[0]
+			filename = f"{t.hour}_{t.minute}_{t.second}_{name}.jpg"
 			imageio.imwrite(os.path.join(self.results_path, filename), processed_image)
 
 	def __run_algorithm(self, image, path):

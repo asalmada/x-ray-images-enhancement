@@ -43,6 +43,8 @@ class CLAHE(BaseAlgorithm):
 		self.window_size = int(input())
 		print("Clip limit: ")
 		self.clip_limit = int(input())
+		print("Number of iterations: ")
+		self.n_iter = int(input())
 
 	def clahe(self, image):
 		'''Applies the CLAHE algorithm in an image.
@@ -60,14 +62,22 @@ class CLAHE(BaseAlgorithm):
 		padded_equalized_image = np.zeros(shape).astype(np.uint8)
 
 		for i in range(border, shape[0] - border):
-			print(f"Line: {i}")
+			if i % 50 == 0:
+				print(f"Line: {i}")
 			for j in range(border, shape[1] - border):
 				# Region to extract the histogram
 				region = padded_image[i-border:i+border+1, j-border:j+border+1]
 				# Calculating the histogram from region
-				clipped_hist = self.clipped_histogram_equalization(region)
+				hist, bins = pu.histogram(region)
+				# Clipping the histogram
+				clipped_hist = pu.clip_histogram(hist, bins, self.clip_limit)
+				# Trying to reduce the values above clipping
+				for _ in range(self.n_iter):
+					clipped_hist = pu.clip_histogram(hist, bins, self.clip_limit)
+				# Calculating the CDF
+				cdf = pu.calculate_cdf(hist, bins)
 				# Changing the value of the image to the result from the CDF for the given pixel
-				padded_equalized_image[i][j] = clipped_hist[padded_image[i][j]]
+				padded_equalized_image[i][j] = cdf[padded_image[i][j]]
 
 		# Removing the padding from the image
 		equalized_image = padded_equalized_image[border:shape[0] - border, border:shape[1] - border].astype(np.uint8)

@@ -14,6 +14,7 @@ class ArgumentHandler:
 		group.add_argument("-p", metavar="path", type=str, help="path to the images to be processed")
 
 		self.__parser.add_argument("-a", metavar="alg", type=str, help="algorithm to be used", required=True, choices=["clahe", "um", "hef"])
+		self.__parser.add_argument("-o", metavar="path", type=str, help="path to export the results", required=False)
 
 	def get_image(self):
 		'''Gets the image from argument -i.'''
@@ -31,3 +32,9 @@ class ArgumentHandler:
 		'''Gets the algorithm from argument -a.'''
 
 		return self.__parsed_args['a']
+
+	def get_output_path(self):
+		'''Gets the path from argument -o.'''
+
+		if self.__parsed_args['o']:
+			return self.__parsed_args['o']

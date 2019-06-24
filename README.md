@@ -29,7 +29,7 @@ sharpened image = original image + amount * (unsharped mask)
 The **radius** setting is related to the blur intensity (as explained before) because it defines the size of the edges. The **amount** setting, on the other hand, controls the intensity of the edges (how much dark or light it will be).
 
 ### Results
-Even though this technique is quite simple, it's also very powerfull because we can have satisfying results with a linear time complexity O(n).
+Even though this technique is quite simple, it's also very powerful because we can have satisfying results with a linear time complexity O(n).
 
 | Original Image  | Enhanced Image |
 | ------------- | ------------- |
@@ -39,11 +39,84 @@ Even though this technique is quite simple, it's also very powerfull because we 
 | ![](images/029.jpg)  | ![](docs/029_um.jpg)  |
 | ![](images/043.jpg)  | ![](docs/043_um.jpg)  |
 
-It's not really necessary apply only the gaussian filter in order to get the unsharpened mask. In fact, the project also tested another filters studied at class:
+It's not really necessary to apply only the gaussian filter in order to get the unsharpened mask. In fact, the project also tested another filters studied at class:
 
 | Original Image  | Gaussian Filter | Median Filter | Maximum Filter | Minimum Filter |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | ![](images/055.jpg)  | ![](docs/055_um_gaussian.jpg) | ![](docs/055_um_median.jpg) | ![](docs/055_um_maximum.jpg) | ![](docs/055_um_minimum.jpg) |
+
+## CLAHE
+
+The Contrast Limited Adaptive Histogram Equalization method is a histogram-based method used to improve contrast in images. This technique computes the histogram for the region around each pixel in the image, improving the local contrast and enhancing the edges in each region. Since AHE can overamplify noise in the image, CLAHE prevents this by limiting the amplification.
+
+To apply CLAHE to the images, we first convert them to grayscale and then normalize. This approach is similar to [N-CLAHE](https://www.researchgate.net/publication/322004051_Image_enhancement_on_digital_x-ray_images_using_N-CLAHE), but we do not used a log normalization. After this step, the image is padded by reflecting the pixels in the borders, so we can process it all.
+
+Then, to each pixel in the image, we calculate the clipped histogram for the region around it, i.e., we define the maximum number of occurrences a pixel should have. If the occurrence is greater than the clip limit, we cut the exceeding and redistribute to all pixels. To improve this technique, this process can be repeated a certain number of times.
+
+With the clipped histogram, we calculate the probability of each pixel in it and compute the CDF (Cumulative Distribution Function), using the cumulative sum of the ordered pixels, and multiply each value of the function by 255, to limit the image's values to [0, 255]. Since these are float values, the floor operation is used.
+
+After calculating the CDF, all pixels will have a transformation value. We now apply this transformation to the pixel in the center of the region.
+
+This CLAHE implementation expects 3 inputs:
+- Window size: size of the rectangular region around the pixel to be processed.
+- Clip limit: maximum number of occurrences of the pixel in the histogram.
+- Iterations: number of clipping iterations.
+
+As we noticed by processing some images, when the clip limit is very high, the image become noisy. The explanation is that if the limit is very high, there is no clipping, so we fall back to an AHE algorithm.
+
+### Results
+Since CLAHE computes a histogram to each pixel, its complexity is very high and demands a lot of processing time to finish its task. We had difficulties implementing an optimized version, so the current version is the slow one.
+
+Aside from the high cost, the enhanced image is much better than the unprocessed one, showing hidden features by enhancing its edges and amplifying its visibility. The parameters influenced a lot the results:
+
+- Number of clipping iterations: can reduce noise in the image, but increases drastically the needed computational power and not in all cases it was useful.
+- Window size: it was tested a wide range of values for this parameter, since it is the one that influences the most the result. We tested from 8 to 150 and the best one were in [40, 100].
+- Clip limit : were tested values from 4 to 150. The best values that were found was 4 and 150, depending on window size and image. The main influence was in the histograms.
+
+#### Comparison between images
+
+To compare the effects of the parameters, several different runs were made with different parameters. The best combination we found was WS = 100, CL = 150 and IT = 1. Depending on the image, IT = 5 yields a great result, as in the Nonossifying Fibroma images. IT > 5 yielded no improvement in the tests. The results can be seen in the next tables.
+
+- WS: window size
+- CL: clip limit
+- IT: clipping iterations
+
+| Original | WS: 40, CL: 4, IT: 1 | Histogram |
+| ------------- | ------------- | ------------- |
+| ![](images/001.jpg)  | ![](docs/clahe/001/40_4_1.jpg)  | ![](docs/clahe/001/40_4_1_hist.jpg)  |
+
+| Original | WS: 40, CL: 150, IT: 1 | Histogram |
+| ------------- | ------------- | ------------- |
+| ![](images/001.jpg) | ![](docs/clahe/001/40_150_1.jpg) | ![](docs/clahe/001/40_150_1_hist.jpg) |
+
+| Original | WS: 100, CL: 4, IT: 1 | Histogram |
+| ------------- | ------------- | ------------- |
+| ![](images/001.jpg) | ![](docs/clahe/001/100_4_1.jpg) | ![](docs/clahe/001/100_4_1_hist.jpg) |
+
+| Original | WS: 100, CL: 150, IT: 1 | Histogram |
+| ------------- | ------------- | ------------- |
+| ![](images/001.jpg) | ![](docs/clahe/001/100_150_1.jpg) | ![](docs/clahe/001/100_150_1_hist.jpg) |
+
+| Original | WS: 100, CL: 150, IT: 1 | Histogram |
+| ------------- | ------------- | ------------- |
+| ![](images/nonossifying_fibroma1_modified.jpg) | ![](docs/clahe/fibroma1/100_150_1.jpg) | ![](docs/clahe/fibroma1/100_150_1_hist.jpg) |
+| Original | WS: 100, CL: 150, IT: 5 | Histogram |
+| ![](images/nonossifying_fibroma1_modified.jpg) | ![](docs/clahe/fibroma1/100_150_5.jpg) | ![](docs/clahe/fibroma1/100_150_5_hist.jpg) |
+
+| Original | WS: 100, CL: 150, IT: 1 | Histogram |
+| ------------- | ------------- | ------------- |
+| ![](images/nonossifying_fibroma2_modified.jpg) | ![](docs/clahe/fibroma2/100_150_1.jpg) | ![](docs/clahe/fibroma2/100_150_1_hist.jpg) |
+
+| Original | WS: 100, CL: 150, IT: 5 | Histogram |
+| ------------- | ------------- | ------------- |
+| ![](images/nonossifying_fibroma2_modified.jpg) | ![](docs/clahe/fibroma2/100_150_5.jpg) | ![](docs/clahe/fibroma2/100_150_5_hist.jpg) |
+
+#### Other tested images
+
+| Original | Enhanced |
+| ------------- | ------------- |
+| ![](images/013.jpg)  | ![](docs/clahe/013/100_150_1.jpg)  |
+| ![](images/020.jpg) | ![](docs/clahe/020/100_150_1.jpg) |
 
 ## Conclusion
 
@@ -57,11 +130,11 @@ Two other images from the same case, a [Nonossifying Fibroma](https://medpix.nlm
 
 | Original | UM  | HEF | CLAHE |
 | ------------- | ------------- | ------------- | ------------- |
-![](images/nonossifying_fibroma1.jpg) | ![](docs/nonossifying_fibroma1_um.jpg) | SOON | SOON |
+![](images/nonossifying_fibroma1.jpg) | ![](docs/nonossifying_fibroma1_um.jpg) | SOON | ![](docs/clahe/fibroma1/100_150_5.jpg) |
 
 | Original | UM  | HEF | CLAHE |
 | ------------- | ------------- | ------------- | ------------- |
-![](images/nonossifying_fibroma2.jpg) | ![](docs/nonossifying_fibroma2_um.jpg) | SOON | SOON |
+![](images/nonossifying_fibroma2.jpg) | ![](docs/nonossifying_fibroma2_um.jpg) | SOON | ![](docs/clahe/fibroma2/100_150_5.jpg) |
 
 ## Authors
 
