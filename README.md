@@ -100,7 +100,9 @@ To compare the effects of the parameters, several different runs were made with 
 | Original | WS: 100, CL: 150, IT: 1 | Histogram |
 | ------------- | ------------- | ------------- |
 | ![](images/nonossifying_fibroma1_modified.jpg) | ![](docs/clahe/fibroma1/100_150_1.jpg) | ![](docs/clahe/fibroma1/100_150_1_hist.jpg) |
+
 | Original | WS: 100, CL: 150, IT: 5 | Histogram |
+| ------------- | ------------- | ------------- |
 | ![](images/nonossifying_fibroma1_modified.jpg) | ![](docs/clahe/fibroma1/100_150_5.jpg) | ![](docs/clahe/fibroma1/100_150_5_hist.jpg) |
 
 | Original | WS: 100, CL: 150, IT: 1 | Histogram |
@@ -153,6 +155,12 @@ Two other images from the same case, a [Nonossifying Fibroma](https://medpix.nlm
 | Original | UM  | HEF | CLAHE |
 | ------------- | ------------- | ------------- | ------------- |
 ![](images/nonossifying_fibroma2.jpg) | ![](docs/nonossifying_fibroma2_um.jpg) | ![](docs/nonossifying_fibroma2_hef.jpg) | ![](docs/clahe/fibroma2/100_150_5.jpg) |
+
+There is a reason why these three algorithms are very know in the literature: all of them returned great results involving x-ray images, allowing us to achieve our project's goal, improving the visibility of fractures in both of the cases above.
+
+It's clear that the CLAHE algorithm, despite being harder to code and optimize, had the best results for our application. The only weak point in this strategy is its running time, much more slower than the other two algorithms.
+
+Concluding, if there's available time for the image analysis to be done, the CLAHE algorithm is the recommended one. But if there's not, the UM or HEF can return a satisfatory image without taking so much time.
 
 ## Authors
 
