@@ -178,24 +178,19 @@ Concluding, if there's available time for the image analysis to be done, the CLA
 - Eduardo Garcia Misiuk 9293230
 
 # Dependencies
-## Packages
-### Python
-`apt-get install python3`
-
-### venv
-`apt-get install python3-venv`
-
-## Libraries
-Setup the repository by following the instructions from [installation](installation) section.  
-After activating the environment, run `pip install -r requirements.txt` to install the libraries.
 
 # Installation
-Clone the repository with `git clone https://github.com/asalmada/x-ray-images-enhancement`.  
+
+## Dependencies
+This project was tested in Python 3.10 using venv. Please follow the instructions for your platform on how to install
+Python.
+
+## Project Setup
+
+Clone the repository with `git clone https://github.com/asalmada/x-ray-images-enhancement`.
 Run `python3 -m venv x-ray-images-enhancement` to install the environment in the repository.
+Activate the virtual environment running `source x-ray-images-enhancement/bin/activate` and then run
+`pip install -r requirements.txt` to install the dependencies.
 
-## Environment
-To activate, run `source bin/activate` in Linux or `source Scripts/activate` in Windows.  
-To deactivate, run `deactivate`.
-
-# Demonstration
+## Demonstration
 To run the demonstration, run `chmod 755 demo.sh` and then `./demo.sh`.
