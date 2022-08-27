@@ -2,6 +2,7 @@ bin
 pyvenv.cfg
 share
 .vscode
+.idea
 Scripts
 include
 results
